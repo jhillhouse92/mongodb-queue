@@ -72,7 +72,7 @@ Queue.prototype.subscribeClient = function (clientKey, messageEndpoint) {
                 upsert: true
             }, 
             function (err, result) {
-                if (err) return reject(err)
+                if (err) return reject(new Error(err))
                 resolve(result)
             }
         );
