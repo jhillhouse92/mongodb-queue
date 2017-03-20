@@ -54,36 +54,39 @@ function Queue(mongoDbClient, name, opts) {
 Queue.prototype.subscribeClient = function (clientKey, messageEndpoint) {
 
     var client = {
-        queues: [this.name],
         messageEndpoint: messageEndpoint
     };
 
     return new Promise((resolve, reject) => {
-        this.clientCol.findAndModify({
-            query: { _id: clientKey },
-            update: {
+        this.clientCol.findAndModify(
+            { _id: clientKey },
+            {},
+            {
                 $setOnInsert: client,
                 $addToSet: {
                     queues: this.name
                 }
             },
-            new: true,
-            upsert: true
-        }, function (err, results) {
-            if (err) return reject(err)
-            resolve(null, '' + results.ops[0]._id)
-        });
+            { 
+                new: true, 
+                upsert: true
+            }, 
+            function (err, result) {
+                if (err) return reject(err)
+                resolve(result)
+            }
+        );
     });
 }
 
 Queue.prototype.getClients = function () {
     return new Promise((resolve, reject) => {
-        this.clientCol.find({
-            query: { queues: this.name }
-        }, function (err, results) {
-            if (err) return reject(err)
-            resolve(null, results)
-        });
+        this.clientCol.find({ queues: this.name },
+            function (err, results) {
+                if (err) return reject(err)
+                resolve(results)
+            }
+        );
     });
 }
 
