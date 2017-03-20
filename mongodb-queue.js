@@ -73,7 +73,7 @@ Queue.prototype.subscribeClient = function (clientKey, messageEndpoint) {
             }, 
             function (err, result) {
                 if (err) return reject(new Error(err))
-                resolve(result)
+                resolve(result.value)
             }
         );
     });
