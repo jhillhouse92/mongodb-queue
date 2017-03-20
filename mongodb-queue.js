@@ -43,7 +43,7 @@ function Queue(mongoDbClient, name, opts) {
     this.col = mongoDbClient.collection(name)
     this.visibility = opts.visibility || 30
     this.delay = opts.delay || 0
-    this.clientCol = (opts.clientsCollection) ? opts.clientsCollection : mongoDbClient.collection('queueClients');
+    this.clientCol = (opts.clientsCollection) ? mongoDbClient.collection(opts.clientsCollection) : mongoDbClient.collection('queueClients');
 
     if (opts.deadQueue) {
         this.deadQueue = opts.deadQueue
