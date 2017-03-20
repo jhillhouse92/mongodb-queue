@@ -81,7 +81,7 @@ Queue.prototype.subscribeClient = function (clientKey, messageEndpoint) {
 
 Queue.prototype.getClients = function () {
     return new Promise((resolve, reject) => {
-        this.clientCol.find({ queues: this.name },
+        this.clientCol.find({ queues: this.name }).toArray(
             function (err, results) {
                 if (err) return reject(err)
                 resolve(results)
