@@ -133,7 +133,7 @@ Queue.prototype.add = function (payload, opts, callback) {
     return new Promise((resolve, reject) => {
         self.col.insertMany(msgs, function (err, results) {
             if (err) return reject(err)
-            if (payload instanceof Array) return resolve(null, '' + results.insertedIds)
+            if (payload instanceof Array) return resolve(null, results)
             resolve(null, results)
         })
     });
