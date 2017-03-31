@@ -134,7 +134,7 @@ Queue.prototype.add = function (payload, opts, callback) {
         self.col.insertMany(msgs, function (err, results) {
             if (err) return reject(err)
             if (payload instanceof Array) return resolve(null, '' + results.insertedIds)
-            resolve(null, '' + results.ops[0]._id)
+            resolve(null, '' + results.value._id)
         })
     });
 }
