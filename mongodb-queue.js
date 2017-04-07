@@ -51,18 +51,14 @@ function Queue(mongoDbClient, name, opts) {
     }
 }
 
-Queue.prototype.subscribeClient = function (clientKey, messageEndpoint) {
-
-    var client = {
-        messageEndpoint: messageEndpoint
-    };
+Queue.prototype.subscribeClient = function (id, subscriber) {
 
     return new Promise((resolve, reject) => {
         this.clientCol.findAndModify(
-            { _id: clientKey },
+            { _id: id },
             {},
             {
-                $setOnInsert: client,
+                $setOnInsert: subscriber,
                 $addToSet: {
                     queues: this.name
                 }
